@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css?family=Archivo+Black');
+
+body, html{
+  height: 100%;
+  display:block;
+  scroll-behavior: smooth;
+}
+
+canvas{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:400px;
+  
+}
+
+#cool{
+  
+  position:relative;
+  width:100%;
+  /* color:rgb(101, 161, 202); */
+  color:white;
+  /* left:30vw;
+  top:12vw; */
+
+  font-family: 'Chakra Petch', sans-serif;
+  /* font-family: 'Raleway',sans-serif; */
+
+  /* font-size: 60px; */
+  font-size: 4.4vw;
+  
+  /* -webkit-text-fill-color:transparent;
+  -webkit-text-stroke:.1px; */
+  
+
+  /* letter-spacing: 3px; */
+
+   /* background-color:red;  */
+
+   top:8vw;
+}
+
+
+main{
+  position:relative;
+  width:80%;
+  height:100%;
+  margin:auto;
+
+  /* background-color:blue; */
+
+  text-align:center;
+  
+  
+}
+
+#footer{
+  
+  display:flex;
+  position:fixed;
+  bottom:0;
+  width:100%;
+  left:0;
+}
+
+#footer > *:nth-child(1){
+  flex: 33%;
+padding:5px;
+
+}
+
+#footer > *:nth-child(2){
+  flex: 33%;
+padding:5px;
+
+}
+
+
+#footer > *:nth-child(3){
+  flex: 33%;
+padding:5px;
+
+}
+
+
+
+
