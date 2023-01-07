@@ -1,9 +1,13 @@
 @import url('https://fonts.googleapis.com/css?family=Archivo+Black');
 
 body, html{
+  width:100%;
   height: 100%;
   display:block;
   scroll-behavior: smooth;
+  overflow-y:hidden;
+  overflow-x:hidden;
+  
 }
 
 canvas{
@@ -11,7 +15,9 @@ canvas{
   top:0;
   left:0;
   width:100%;
-  height:400px;
+  height: 100%;;
+  
+  
   
 }
 
@@ -28,7 +34,7 @@ canvas{
   /* font-family: 'Raleway',sans-serif; */
 
   /* font-size: 60px; */
-  font-size: 4.4vw;
+  font-size: 4vw;
   
   /* -webkit-text-fill-color:transparent;
   -webkit-text-stroke:.1px; */
@@ -39,10 +45,12 @@ canvas{
    /* background-color:red;  */
 
    top:8vw;
+   
 }
 
 
 main{
+  top:0;
   position:relative;
   width:80%;
   height:100%;
@@ -53,6 +61,12 @@ main{
   text-align:center;
   
   
+}
+
+#name{
+  opacity:100;
+  transition: 1s;
+  z-index: -1;
 }
 
 #footer{
@@ -83,6 +97,31 @@ padding:5px;
 
 }
 
+#home:hover{
+  opacity:70%;
+  cursor:pointer;
+}
 
+#projects:hover{
+  opacity:70%;
+  cursor:pointer;
+}
 
+#about:hover{
+  opacity:70%;
+  cursor:pointer;
+}
 
+p{
+  font-family: 'Chakra Petch', sans-serif;
+  font-size: 50px;
+  
+}
+
+#aboutPara{
+  /* width:400px;
+  height:400px; */
+  
+  background-color: red;
+  
+}

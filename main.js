@@ -4,8 +4,11 @@ import * as THREE from 'three';
 import { AmbientLight } from 'three';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { mapLinear } from 'three/src/math/MathUtils';
+import gsap from 'gsap';
+import { CSS2DRenderer, CSS2DObject} from 'three/examples/jsm/renderers/CSS2DRenderer';
 
 
+//--------------------------SETTING UP SCENE AND PROPERTIES--------------------------
 
 var scene = new THREE.Scene();
 scene.background = new THREE.Color(0x151E3D);
@@ -29,12 +32,20 @@ camera.position.z = 18;
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 
-//--------------------------object creation
+const labelRenderer = new CSS2DRenderer();
+labelRenderer.setSize(window.innerWidth, window.innerHeight);
+labelRenderer.domElement.style.top = '0';
+labelRenderer.domElement.style.position = 'fixed';
+labelRenderer.domElement.style.pointerEvents = 'none';
+document.body.appendChild(labelRenderer.domElement);
+
+
 renderer.render(scene, camera);
 
-const geometry = new THREE.SphereGeometry(12, 12, 12)
-const material = new THREE.MeshStandardMaterial({color: 0xFFFF00, wireframe:true});
-const wireSphere = new THREE.Mesh( geometry, material );
+//---------------------------------------------------------------------------------------------
+
+
+//--------------------------object creation----------------------------------------------------
 
 var radius = .7,
     segments = 16,
@@ -46,7 +57,6 @@ var sphere = new THREE.Mesh(
   
 );
 
-sphere.position.set(5,18,-16);
 
 var box = new THREE.Mesh(
   new THREE.BoxGeometry(7,7,7),
@@ -82,6 +92,7 @@ box.position.set(-5,10,0);
 box2.position.set(-5,0,-10);
 platform.position.set(0,-15,0);
 tri.position.set(5,-4,0);
+sphere.position.set(5,18,-16);
 
 box.rotateX(4);
 box.rotateY(5);
@@ -89,7 +100,6 @@ box2.rotateX(1);
 box2.rotateY(7);
 
 scene.add(sphere, box, box2, tri, platform);
-
 
 
 function addStar(){//makes stars appear in rando locations in background
@@ -106,27 +116,156 @@ function addStar(){//makes stars appear in rando locations in background
 Array(500).fill().forEach(addStar)//creates the stars
 
 
+//---------------------------------creates about me geometries-----------------------
+
+
+var aboutSlate = new THREE.Mesh(
+  new THREE.PlaneGeometry(10,10,1,1),
+  new THREE.MeshStandardMaterial({color:0x4b4e82})
+);
+
+aboutSlate.position.set(95,0,95);
+aboutSlate.rotateY(.78)
+
+scene.add(aboutSlate)
+
+
+
+
+
+//--------------------------------------------------------------------------------------------------------
+
+
+//--------------controls the camera movement when a button is clicked-----------------
+
+const home = document.getElementById("home");
+const projects = document.getElementById("projects");
+const about = document.getElementById("about");
+
+home.addEventListener("click", goHome);
+projects.addEventListener("click", goProjects);
+about.addEventListener("click", goAbout);
+
+function goHome(){
+  const tl = gsap.timeline();
+  tl.to(camera.position, {
+    x:0,
+    duration:1.5,
+    
+  });
+
+  tl.to(camera.position, {
+    z:18,
+    duration:1.5,
+    
+  });
+    
+  document.getElementById("about").textContent = "<About>"
+  document.getElementById("home").textContent = "</Home>"
+  document.getElementById("projects").textContent = "<Projects>"
+
+
+  setTimeout(function() {
+    document.getElementById('name').style.opacity = 100;
+  }, 3000);
+  
+}
+
+function goProjects(){
+  const tl = gsap.timeline();
+  tl.to(camera.position, {
+    x:-100,
+    y:30,
+    z:100,
+    duration:2,
+    
+  });
+
+  tl.to(camera.position, {
+    x:-100,
+    y:0,
+    z:100,
+    duration:1,
+    
+  });
+
+  document.getElementById("about").textContent = "<About>"
+  document.getElementById("home").textContent = "<Home>"
+  document.getElementById("projects").textContent = "</Projects>"
+
+  document.getElementById("aboutPara").style.opacity = 0;
+
+  setTimeout(function() {
+    document.getElementById('name').style.opacity = 0;
+  }, 500);
+}
+
+function goAbout(){
+  const tl = gsap.timeline();
+  tl.to(camera.position, {
+    x:100,
+    y:30,
+    z:100,
+    duration:2,
+    
+  });
+
+  tl.to(camera.position, {
+    x:100,
+    y:0,
+    z:100,
+    duration:1,
+    
+  });
+ 
+
+  document.getElementById("about").textContent = "</About>"
+  document.getElementById("home").textContent = "<Home>"
+  document.getElementById("projects").textContent = "<Projects>"
+
+
+
+  setTimeout(function() {
+    document.getElementById('name').style.opacity = 0;
+    document.getElementById("aboutPara").style.opacity = 100;
+  }, 500);
+}
+
+//-------------------------------------------------------------------------------
+
+const p = document.createElement('p');
+p.textContent = 'Hi, im Alan a future Software Engineer.';
+const cPointLabel = new CSS2DObject(p);
+
+const div = document.createElement('div');
+div.appendChild(p);
+div.setAttribute("id", "aboutPara");
+const divContainer = new CSS2DObject(div);
+scene.add(divContainer);
+divContainer.position.set(95, 0, 95)
 
 
 
 
 
 
-
-
+//-----------------------------------ALL LIGHTS IN PROJECT--------------
 const pointLight1 = new THREE.PointLight(0xF4D03F, 5, 50)
 const SpaceLight = new THREE.SpotLight(0xffffff,1,20000,Math.PI, 0)
 const SpaceLight2 = new THREE.SpotLight(0xffffff,1,20000,Math.PI, 0)
+const aboutLight = new THREE.PointLight(0xffffff,5,50)
 SpaceLight.position.set(0,0,-500)
 SpaceLight2.position.set(0,0,-100)
+
 pointLight1.castShadow = true;
 
 
 pointLight1.position.set(5,16.3,-12.8)
 
+aboutLight.position.set(100,0,100)
 
 const ambientLight = new THREE.AmbientLight(0xffffaa);
-scene.add(pointLight1,SpaceLight, SpaceLight2);
+scene.add(pointLight1,SpaceLight, SpaceLight2, aboutLight);
 
 
 //const lightHelper = new THREE.PointLightHelper(pointLight1)
@@ -143,8 +282,12 @@ sl.position.set(4,15,15);
 
 scene.add( sl);
 
+//-----------------------------------------------------------
+
 const controls = new OrbitControls(camera, renderer.domElement);//allows mouse controls domElement is mouse
 
+
+//-----------------------------------------Animation loop and resize event----------------
 
 function animate(){//allows movement
   requestAnimationFrame( animate );
@@ -161,7 +304,7 @@ function animate(){//allows movement
   tri.rotation.z += 0.004;  
   
 
-  
+  labelRenderer.render(scene,camera);
   
 
   renderer.render( scene, camera);
@@ -175,5 +318,6 @@ window.addEventListener('resize', function() {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
+  labelRenderer.setSize(this.window.innerWidth, this.window.innerHeight);
 });
-
+//-------------------------------------------------------------
