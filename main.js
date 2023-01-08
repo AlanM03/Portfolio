@@ -127,7 +127,7 @@ var aboutSlate = new THREE.Mesh(
 aboutSlate.position.set(95,0,95);
 aboutSlate.rotateY(.78)
 
-scene.add(aboutSlate)
+//scene.add(aboutSlate)
 
 
 
@@ -234,11 +234,30 @@ function goAbout(){
 //-------------------------------------------------------------------------------
 
 const p = document.createElement('p');
-p.textContent = 'Hi, im Alan a future Software Engineer.';
+p.textContent = '👋 Im Alan, a sophomore majoring in Computer Science at the College of Staten Island with an eye on Software Engineering and Web Development. Ive been using technology my whole life and have always been fascinated by it so now im trying to make a mark on others by creating my own!';
 const cPointLabel = new CSS2DObject(p);
 
+const h3 = document.createElement('h3');
+h3.textContent = 'Who am I?';
+const h3PointLabel = new CSS2DObject(h3);
+
 const div = document.createElement('div');
+
+const img = document.createElement('img');
+img.src = "imgs/frostKnight.gif";
+img.setAttribute("id", "knightImg");
+const imgLabel = new CSS2DObject(img);
+
+const img2 = document.createElement('img');
+img2.src = "imgs/gravelord.gif";
+img2.setAttribute("id", "gravelordImg");
+const img2Label = new CSS2DObject(img2);
+
 div.appendChild(p);
+div.appendChild(h3);
+div.appendChild(img);
+div.appendChild(img2);
+
 div.setAttribute("id", "aboutPara");
 const divContainer = new CSS2DObject(div);
 scene.add(divContainer);
