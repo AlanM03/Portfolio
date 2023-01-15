@@ -132,7 +132,6 @@ aboutSlate.rotateY(.78)
 
 
 
-
 //--------------------------------------------------------------------------------------------------------
 function createAboutPara() {
   const p = document.createElement('p');
@@ -222,15 +221,17 @@ window.addEventListener('load', createAboutPara);
 window.addEventListener('load', createProjects);
 
 
-
-
-
-
-
-
-
-
-
+//---variables to stop set intervals if needed
+let homeTime;
+let proj1Time;
+let proj2Time;
+let proj3Time;
+let aboutTime;
+let x = null;
+let x2;
+let count = null;
+let ranLeft = false;
+let ranRight = false;
 
 //--------------controls the camera movement when a button is clicked-----------------
 
@@ -245,6 +246,10 @@ about.addEventListener("click", goAbout);
   
     
 function goHome(){
+  clearTimeout(proj1Time);
+  clearTimeout(proj2Time);
+  clearTimeout(proj3Time);
+  clearTimeout(aboutTime);
   const tl = gsap.timeline();
   tl.to(camera.position, {
     x:0,
@@ -256,6 +261,7 @@ function goHome(){
   });
 
   tl.to(camera.position, {
+    x:0,
     z:18,
     duration:1.5,
     onUpdate: function(){
@@ -271,7 +277,7 @@ function goHome(){
   document.getElementById('arrows').style.display = "none";
   document.getElementById('name').style.display = "block";
 
-  setTimeout(function() {
+  homeTime = setTimeout(function() {
     document.getElementById('name').style.opacity = 100;
     
   }, 3000);
@@ -279,9 +285,18 @@ function goHome(){
 }
 
 function goProjects(){
+  clearTimeout(homeTime);
+  clearTimeout(aboutTime);
+  if(x == null)
+    x = -100;
+  if(count == null)
+    count = 1;
+
+  console.log('count started at ' + count)
+  console.log(x);
   const tl = gsap.timeline();
   tl.to(camera.position, {
-    x:-100,
+    x:x,
     y:30,
     z:100,
     duration:2,
@@ -293,10 +308,13 @@ function goProjects(){
   });
 
   tl.to(camera.position, {
-    x:-100,
+    x:x,
     y:0,
     z:100,
     duration:1,
+    onUpdate: function(){
+      camera.lookAt(-100,0,-500);
+    }
     
     
   });
@@ -305,7 +323,7 @@ function goProjects(){
   document.getElementById("home").textContent = "<Home>"
   document.getElementById("projects").textContent = "</Projects>"
 
-  setTimeout(function(){
+  proj1Time = setTimeout(function(){
     let showProj = document.querySelectorAll("#projPics");
 
     for(let i = 0; i < showProj.length; i++){
@@ -316,11 +334,11 @@ function goProjects(){
 
   document.getElementById("aboutPara").style.opacity = 0;
 
-  setTimeout(function() {
+  proj2Time = setTimeout(function() {
     document.getElementById('name').style.opacity = 0;
   }, 500);
 
-  setTimeout(function() {
+  proj3Time = setTimeout(function() {
     document.getElementById('name').style.display = "none";
     document.getElementById('arrows').style.opacity = 1;
     document.getElementById('arrows').style.display = "flex";
@@ -333,28 +351,25 @@ function goProjects(){
   //arrow logic--------
   const leftArrow = document.getElementById("left");
   const rightArrow = document.getElementById("right");
-  var count = 1, max = 3;//max is the # of projects on page
-  var x = -100;
-  var x2;
+  var max = 3;//max is the # of projects on page
+  
+  //var x = -100;
+  //var x2;
 
   var projNames = ["First Website", "First Portfolio", "geolocator app"];
   var projLink = ["https://project-2-hacked-website-qcc2022edlc2w4.qcc2022edlc2w4.repl.co", "https://my-final-portfolio-alanmack.qcc2022edlc2w4.repl.co", "..."];
 
   
   document.getElementById('middle').innerHTML = projNames[count-1];
-  document.getElementById('middle').href = projNames[count-1];
+  document.getElementById('middle').href = projLink[count-1];
 
-  Object.defineProperty(this, 'x2', {//makes x2 always equal to x
-    get() { return x; },
-    set(value) { x = value; },
-  });
-
+if(ranLeft == false){
   leftArrow.addEventListener("click", function(){
-    console.log(count)
+    
     if(count < max){
       document.getElementById('right').style.opacity = 1;
       x = x-40;
-      
+      x2 = x;
       gsap.to(camera.position, {
         x:x,
         y:0,
@@ -362,22 +377,26 @@ function goProjects(){
         duration:1.5,
         
       });
-    
+      console.log(x);
       count++;
+      console.log(count)
 
       if(count == max)
       document.getElementById('left').style.opacity = 0;
   }
   document.getElementById('middle').innerHTML = projNames[count-1];
-  document.getElementById('middle').href = projNames[count-1];
+  document.getElementById('middle').href = projLink[count-1];
 
   });
+  ranLeft = true;
+}
 
+if(ranRight == false){
   rightArrow.addEventListener("click", function(){
     
-    console.log(count);
     if(count > 1){
       count--;
+      console.log('clicked right' + count);
       x2 = x+40;
       gsap.to(camera.position, {
         x:x2,
@@ -387,18 +406,32 @@ function goProjects(){
         
       });
       x = x2;
+      console.log(x);
   }
   document.getElementById('middle').innerHTML = projNames[count-1];
-  document.getElementById('middle').href = projNames[count-1];
-    if(count == 1)
-      document.getElementById('right').style.opacity = 0;
+  document.getElementById('middle').href = projLink[count-1];
+    if(count != 3){
       document.getElementById('left').style.opacity = 1;
+    }
+
+    if(count == 1){
+      document.getElementById('right').style.opacity = 0;
+    }
   });
+  ranRight = true;
+}
+  
+  
   
 }
 //---------------
 
 function goAbout(){
+  console.log('count ended at ' + count)
+  clearTimeout(proj1Time);
+  clearTimeout(proj2Time);
+  clearTimeout(proj3Time);
+  clearTimeout(homeTime);
   const tl = gsap.timeline();
   tl.to(camera.position, {
     x:100,
@@ -436,19 +469,12 @@ function goAbout(){
   }
 
 
-  setTimeout(function() {
+  aboutTime = setTimeout(function() {
     document.getElementById('name').style.opacity = 0;
     document.getElementById("aboutPara").style.opacity = 1;
     
   }, 500);
 }
-
-//------------------------------------arrow functionality-----------------------------------
-
-
-
-
-
 
 
 //-----------------------------------ALL LIGHTS IN PROJECT--------------
