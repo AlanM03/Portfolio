@@ -136,31 +136,51 @@ aboutSlate.rotateY(.78)
 //--------------------------------------------------------------------------------------------------------
 function createAboutPara() {
   const p = document.createElement('p');
-  p.textContent = '👋 Im Alan, a sophomore majoring in Computer Science at the College of Staten Island with an eye on Software Engineering and Web Development. Ive been using technology my whole life and have always been fascinated by it so now im trying to make a mark on others by creating my own!';
-  const cPointLabel = new CSS2DObject(p);
+  p.textContent = '👋 Im Alan, a sophomore majoring in Computer Science at the College of Staten Island with an eye on Software Engineering and Web Development. Ive been using technology my whole life and have always been fascinated by it so now im trying to make a mark on others by contributing to the field professionally!';
+  const pPointLabel = new CSS2DObject(p);
 
   const h3 = document.createElement('h3');
   h3.textContent = 'Who am I?';
   const h3PointLabel = new CSS2DObject(h3);
 
+  const h5 = document.createElement('h5');
+  h5.textContent = 'Technical Skills:';
+  const h5PointLabel = new CSS2DObject(h5);
+
+  const h52 = document.createElement('h5');
+  h52.textContent = 'Professional Skills:';
+  const h52PointLabel = new CSS2DObject(h52);
+  h52.setAttribute("id", "h52");
+
+  const p2 = document.createElement('p');
+  p2.textContent = 'C++, Javascript, Three.js, Python, HTML, CSS, SQL, JQuery, React';
+  const pPointLabel2 = new CSS2DObject(p2);
+  p2.setAttribute("id", "p2");
+
+  const p3 = document.createElement('p');
+  p3.textContent = 'Leadership, Good Communication, Adaptable, Works well under pressure, Detail Oriented';
+  const pPointLabel3 = new CSS2DObject(p3);
+  p3.setAttribute("id", "p3");
+
   const div = document.createElement('div');
 
   const img = document.createElement('img');
-  img.src = "imgs/frostKnight.gif";
+  img.src = "imgs/knight.gif";
   img.setAttribute("id", "knightImg");
   const imgLabel = new CSS2DObject(img);
 
-  const img2 = document.createElement('img');
-  img2.src = "imgs/gravelord.gif";
-  img2.setAttribute("id", "gravelordImg");
-  const img2Label = new CSS2DObject(img2);
+  
   div.setAttribute("id", "aboutPara");
   document.body.appendChild(div);
 
   div.appendChild(p);
+  div.appendChild(p2);
+  div.appendChild(p3);
   div.appendChild(h3);
+  div.appendChild(h5);
+  div.appendChild(h52);
   div.appendChild(img);
-  div.appendChild(img2);
+
 
 
   const divContainer = new CSS2DObject(div);
@@ -406,6 +426,7 @@ function goAbout(){
   document.getElementById("about").textContent = "</About>"
   document.getElementById("home").textContent = "<Home>"
   document.getElementById("projects").textContent = "<Projects>"
+  document.getElementById('arrows').style.display = "none";
 
   
   let hideProj = document.querySelectorAll("#projPics");
