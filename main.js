@@ -167,7 +167,41 @@ function createAboutPara() {
   scene.add(divContainer);
   divContainer.position.set(95, 0, 95)
 }
-window.onload = createAboutPara;
+
+
+function createProjects(){
+  const proj1 = document.createElement('img');
+  proj1.src = "imgs/firstPort.png";
+  proj1.setAttribute("id", "projPics");
+  document.body.appendChild(proj1);
+  const proj1Label = new CSS2DObject(proj1);
+  scene.add(proj1Label);
+  proj1Label.position.set(-100, 0, 95)
+
+  const proj2 = document.createElement('img');
+  proj2.src = "imgs/geolocator.png";
+  proj2.setAttribute("id", "projPics");
+  document.body.appendChild(proj2);
+  const proj2Label = new CSS2DObject(proj2);
+  scene.add(proj2Label);
+  proj2Label.position.set(-140, 0, 95)
+
+
+
+}
+
+window.addEventListener('load', createAboutPara);
+window.addEventListener('load', createProjects);
+
+
+
+
+
+
+
+
+
+
 
 
 //--------------controls the camera movement when a button is clicked-----------------
@@ -223,6 +257,9 @@ function goProjects(){
     y:30,
     z:100,
     duration:2,
+    onUpdate: function(){
+      camera.lookAt(-100,0,-500);
+    }
     
     
   });
@@ -239,6 +276,15 @@ function goProjects(){
   document.getElementById("about").textContent = "<About>"
   document.getElementById("home").textContent = "<Home>"
   document.getElementById("projects").textContent = "</Projects>"
+
+  setTimeout(function(){
+    let showProj = document.querySelectorAll("#projPics");
+
+    for(let i = 0; i < showProj.length; i++){
+      showProj[i].style.opacity = 1;
+  }
+  },2000);
+  
 
   document.getElementById("aboutPara").style.opacity = 0;
 
@@ -258,7 +304,7 @@ function goProjects(){
   //arrow logic--------
   const leftArrow = document.getElementById("left");
   const rightArrow = document.getElementById("right");
-  var count = 0, max = 2;//max is the # of projects on page
+  var count = 1, max = 2;//max is the # of projects on page
   var x = -100;
   var x2;
 
@@ -288,7 +334,7 @@ function goProjects(){
   });
 
   rightArrow.addEventListener("click", function(){
-    if(count > 0){
+    if(count > 1){
       count--;
       x2 = x+40;
       gsap.to(camera.position, {
@@ -300,8 +346,9 @@ function goProjects(){
       });
       x = x2;
   }
-    if(count == 0)
+    if(count == 1)
       document.getElementById('right').style.opacity = 0;
+      document.getElementById('left').style.opacity = 1;
   });
   
 }
@@ -336,6 +383,12 @@ function goAbout(){
   document.getElementById("home").textContent = "<Home>"
   document.getElementById("projects").textContent = "<Projects>"
 
+  
+  let hideProj = document.querySelectorAll("#projPics");
+
+  for(let i = 0; i < hideProj.length; i++){
+    hideProj[i].style.opacity = 0;
+  }
 
 
   setTimeout(function() {

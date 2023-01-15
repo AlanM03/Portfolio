@@ -133,6 +133,15 @@ p{
   opacity: 1;
 }
 
+#projPics{
+  width:50%;
+  height:50%;
+  opacity:0;
+  border-style: outset;
+  border-radius: 10px;
+  border-color:rgb(14, 62, 78);
+}
+
 #arrows{
   width:100%;
   
@@ -175,8 +184,6 @@ h3{
   left:35%;
   font-size: 50px;
   font-family: 'Press Start 2P', cursive;
-  
-  
   
 }
 
