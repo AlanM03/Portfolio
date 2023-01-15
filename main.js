@@ -134,6 +134,40 @@ aboutSlate.rotateY(.78)
 
 
 //--------------------------------------------------------------------------------------------------------
+function createAboutPara() {
+  const p = document.createElement('p');
+  p.textContent = '👋 Im Alan, a sophomore majoring in Computer Science at the College of Staten Island with an eye on Software Engineering and Web Development. Ive been using technology my whole life and have always been fascinated by it so now im trying to make a mark on others by creating my own!';
+  const cPointLabel = new CSS2DObject(p);
+
+  const h3 = document.createElement('h3');
+  h3.textContent = 'Who am I?';
+  const h3PointLabel = new CSS2DObject(h3);
+
+  const div = document.createElement('div');
+
+  const img = document.createElement('img');
+  img.src = "imgs/frostKnight.gif";
+  img.setAttribute("id", "knightImg");
+  const imgLabel = new CSS2DObject(img);
+
+  const img2 = document.createElement('img');
+  img2.src = "imgs/gravelord.gif";
+  img2.setAttribute("id", "gravelordImg");
+  const img2Label = new CSS2DObject(img2);
+  div.setAttribute("id", "aboutPara");
+  document.body.appendChild(div);
+
+  div.appendChild(p);
+  div.appendChild(h3);
+  div.appendChild(img);
+  div.appendChild(img2);
+
+
+  const divContainer = new CSS2DObject(div);
+  scene.add(divContainer);
+  divContainer.position.set(95, 0, 95)
+}
+window.onload = createAboutPara;
 
 
 //--------------controls the camera movement when a button is clicked-----------------
@@ -142,31 +176,42 @@ const home = document.getElementById("home");
 const projects = document.getElementById("projects");
 const about = document.getElementById("about");
 
+
 home.addEventListener("click", goHome);
 projects.addEventListener("click", goProjects);
 about.addEventListener("click", goAbout);
-
+  
+    
 function goHome(){
   const tl = gsap.timeline();
   tl.to(camera.position, {
     x:0,
     duration:1.5,
+    onUpdate: function(){
+      camera.lookAt(0,0,0);
+    }
     
   });
 
   tl.to(camera.position, {
     z:18,
     duration:1.5,
+    onUpdate: function(){
+      camera.lookAt(0,0,0);
+    }
     
   });
     
   document.getElementById("about").textContent = "<About>"
   document.getElementById("home").textContent = "</Home>"
   document.getElementById("projects").textContent = "<Projects>"
-
+  document.getElementById('arrows').style.opacity = 0;
+  document.getElementById('arrows').style.display = "none";
+  document.getElementById('name').style.display = "block";
 
   setTimeout(function() {
     document.getElementById('name').style.opacity = 100;
+    
   }, 3000);
   
 }
@@ -179,6 +224,7 @@ function goProjects(){
     z:100,
     duration:2,
     
+    
   });
 
   tl.to(camera.position, {
@@ -187,8 +233,9 @@ function goProjects(){
     z:100,
     duration:1,
     
+    
   });
-
+  
   document.getElementById("about").textContent = "<About>"
   document.getElementById("home").textContent = "<Home>"
   document.getElementById("projects").textContent = "</Projects>"
@@ -198,7 +245,67 @@ function goProjects(){
   setTimeout(function() {
     document.getElementById('name').style.opacity = 0;
   }, 500);
+
+  setTimeout(function() {
+    document.getElementById('name').style.display = "none";
+    document.getElementById('arrows').style.opacity = 1;
+    document.getElementById('arrows').style.display = "flex";
+    document.getElementById('arrows').style.alignItems = "flex-start";
+    document.getElementById('left').style.opacity = 1;
+  }, 1500);
+
+
+  //arrow logic--------
+  const leftArrow = document.getElementById("left");
+  const rightArrow = document.getElementById("right");
+  var count = 0, max = 2;//max is the # of projects on page
+  var x = -100;
+  var x2;
+
+  Object.defineProperty(this, 'x2', {//makes x2 always equal to x
+    get() { return x; },
+    set(value) { x = value; },
+  });
+
+  leftArrow.addEventListener("click", function(){
+    if(count < max){
+      document.getElementById('right').style.opacity = 1;
+      x = x-40;
+      
+      gsap.to(camera.position, {
+        x:x,
+        y:0,
+        z:100,
+        duration:1.5,
+        
+      });
+    
+      count++;
+
+      if(count == max)
+      document.getElementById('left').style.opacity = 0;
+  }
+  });
+
+  rightArrow.addEventListener("click", function(){
+    if(count > 0){
+      count--;
+      x2 = x+40;
+      gsap.to(camera.position, {
+        x:x2,
+        y:0,
+        z:100,
+        duration:1.5,
+        
+      });
+      x = x2;
+  }
+    if(count == 0)
+      document.getElementById('right').style.opacity = 0;
+  });
+  
 }
+//---------------
 
 function goAbout(){
   const tl = gsap.timeline();
@@ -207,6 +314,9 @@ function goAbout(){
     y:30,
     z:100,
     duration:2,
+    onUpdate: function(){
+      camera.lookAt(0,0,0);
+    }
     
   });
 
@@ -215,6 +325,9 @@ function goAbout(){
     y:0,
     z:100,
     duration:1,
+    onUpdate: function(){
+      camera.lookAt(0,0,0);
+    }
     
   });
  
@@ -227,41 +340,13 @@ function goAbout(){
 
   setTimeout(function() {
     document.getElementById('name').style.opacity = 0;
-    document.getElementById("aboutPara").style.opacity = 100;
+    document.getElementById("aboutPara").style.opacity = 1;
+    
   }, 500);
 }
 
-//-------------------------------------------------------------------------------
+//------------------------------------arrow functionality-----------------------------------
 
-const p = document.createElement('p');
-p.textContent = '👋 Im Alan, a sophomore majoring in Computer Science at the College of Staten Island with an eye on Software Engineering and Web Development. Ive been using technology my whole life and have always been fascinated by it so now im trying to make a mark on others by creating my own!';
-const cPointLabel = new CSS2DObject(p);
-
-const h3 = document.createElement('h3');
-h3.textContent = 'Who am I?';
-const h3PointLabel = new CSS2DObject(h3);
-
-const div = document.createElement('div');
-
-const img = document.createElement('img');
-img.src = "imgs/frostKnight.gif";
-img.setAttribute("id", "knightImg");
-const imgLabel = new CSS2DObject(img);
-
-const img2 = document.createElement('img');
-img2.src = "imgs/gravelord.gif";
-img2.setAttribute("id", "gravelordImg");
-const img2Label = new CSS2DObject(img2);
-
-div.appendChild(p);
-div.appendChild(h3);
-div.appendChild(img);
-div.appendChild(img2);
-
-div.setAttribute("id", "aboutPara");
-const divContainer = new CSS2DObject(div);
-scene.add(divContainer);
-divContainer.position.set(95, 0, 95)
 
 
 
@@ -303,7 +388,7 @@ scene.add( sl);
 
 //-----------------------------------------------------------
 
-const controls = new OrbitControls(camera, renderer.domElement);//allows mouse controls domElement is mouse
+//const controls = new OrbitControls(camera, renderer.domElement);//allows mouse controls domElement is mouse
 
 
 //-----------------------------------------Animation loop and resize event----------------
@@ -311,7 +396,7 @@ const controls = new OrbitControls(camera, renderer.domElement);//allows mouse c
 function animate(){//allows movement
   requestAnimationFrame( animate );
   
-  controls.update();
+  //controls.update();
 
   const time = clock.getElapsedTime();
   

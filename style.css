@@ -130,6 +130,44 @@ p{
   border-style: outset;
   border-radius: 10px;
   border-color:rgb(14, 62, 78);
+  opacity: 1;
+}
+
+#arrows{
+  width:100%;
+  
+  
+  opacity:0;
+  font-size: 4.5vw;
+  display:none;
+  color:rgb(15, 37, 86);
+  position: relative;
+  margin:auto;
+  -webkit-text-stroke: 2px white;
+  transition:1s;
+
+  
+  
+}
+
+#left{
+  flex: 45%;
+  opacity:0;
+  
+
+}
+
+#right{
+  flex: 45%;
+  opacity:0;
+
+}
+
+
+
+h4:hover{
+  opacity:60%;
+  cursor:pointer;
 }
 
 h3{
