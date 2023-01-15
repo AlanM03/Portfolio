@@ -171,7 +171,7 @@ function createAboutPara() {
 
 function createProjects(){
   const proj1 = document.createElement('img');
-  proj1.src = "imgs/firstPort.png";
+  proj1.src = "imgs/firstWeb.png";
   proj1.setAttribute("id", "projPics");
   document.body.appendChild(proj1);
   const proj1Label = new CSS2DObject(proj1);
@@ -179,12 +179,20 @@ function createProjects(){
   proj1Label.position.set(-100, 0, 95)
 
   const proj2 = document.createElement('img');
-  proj2.src = "imgs/geolocator.png";
+  proj2.src = "imgs/firstPort.png";
   proj2.setAttribute("id", "projPics");
   document.body.appendChild(proj2);
   const proj2Label = new CSS2DObject(proj2);
   scene.add(proj2Label);
   proj2Label.position.set(-140, 0, 95)
+
+  const proj3 = document.createElement('img');
+  proj3.src = "imgs/geolocator.png";
+  proj3.setAttribute("id", "projPics");
+  document.body.appendChild(proj3);
+  const proj3Label = new CSS2DObject(proj3);
+  scene.add(proj3Label);
+  proj3Label.position.set(-180, 0, 95)
 
 
 
@@ -282,7 +290,7 @@ function goProjects(){
 
     for(let i = 0; i < showProj.length; i++){
       showProj[i].style.opacity = 1;
-  }
+    }
   },2000);
   
 
@@ -298,15 +306,23 @@ function goProjects(){
     document.getElementById('arrows').style.display = "flex";
     document.getElementById('arrows').style.alignItems = "flex-start";
     document.getElementById('left').style.opacity = 1;
+    document.getElementById('middle').style.opacity = 1;
   }, 1500);
 
 
   //arrow logic--------
   const leftArrow = document.getElementById("left");
   const rightArrow = document.getElementById("right");
-  var count = 1, max = 2;//max is the # of projects on page
+  var count = 1, max = 3;//max is the # of projects on page
   var x = -100;
   var x2;
+
+  var projNames = ["First Website", "First Portfolio", "geolocator app"];
+  var projLink = ["https://project-2-hacked-website-qcc2022edlc2w4.qcc2022edlc2w4.repl.co", "https://my-final-portfolio-alanmack.qcc2022edlc2w4.repl.co", "..."];
+
+  
+  document.getElementById('middle').innerHTML = projNames[count-1];
+  document.getElementById('middle').href = projNames[count-1];
 
   Object.defineProperty(this, 'x2', {//makes x2 always equal to x
     get() { return x; },
@@ -314,6 +330,7 @@ function goProjects(){
   });
 
   leftArrow.addEventListener("click", function(){
+    console.log(count)
     if(count < max){
       document.getElementById('right').style.opacity = 1;
       x = x-40;
@@ -331,9 +348,14 @@ function goProjects(){
       if(count == max)
       document.getElementById('left').style.opacity = 0;
   }
+  document.getElementById('middle').innerHTML = projNames[count-1];
+  document.getElementById('middle').href = projNames[count-1];
+
   });
 
   rightArrow.addEventListener("click", function(){
+    
+    console.log(count);
     if(count > 1){
       count--;
       x2 = x+40;
@@ -346,6 +368,8 @@ function goProjects(){
       });
       x = x2;
   }
+  document.getElementById('middle').innerHTML = projNames[count-1];
+  document.getElementById('middle').href = projNames[count-1];
     if(count == 1)
       document.getElementById('right').style.opacity = 0;
       document.getElementById('left').style.opacity = 1;

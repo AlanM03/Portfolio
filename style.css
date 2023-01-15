@@ -160,16 +160,49 @@ p{
 }
 
 #left{
-  flex: 45%;
+  flex: 33%;
   opacity:0;
   
 
 }
 
 #right{
-  flex: 45%;
+  flex: 33%;
   opacity:0;
 
+}
+
+#middle{
+  flex: 33%;
+  opacity:0;
+  font-family: 'Press Start 2P', cursive;
+}
+
+@media only screen and (max-width: 600px) {
+  #arrows, #projPics {
+    font-size: 4vw;
+    width:90%;
+    height:60%;
+    
+  }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 1200px) {
+  #arrows, #projPics {
+    font-size: 3vw;
+    width:80%;
+    height:60%;
+    
+  }
+}
+
+@media only screen and (min-width: 1201px) {
+  #arrows, #projPics {
+    font-size: 4vw;
+    width:60%;
+    height:50%;
+    
+  }
 }
 
 
